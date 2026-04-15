@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pernille Bergesen</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --accent: #7c5cbf;
+      --accent2: #a78bfa;
+      --bg: #0f0f1a;
+      --bg2: #15152a;
+      --bg3: #1e1e35;
+      --text: #e2e0f0;
+      --muted: #9490b8;
+      --card: #1a1a2e;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: flex-end; align-items: center; padding: 0 3rem; height: 64px; background: rgba(15,15,26,0.85); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(124,92,191,0.18); }
+    nav ul { list-style: none; display: flex; gap: 2.2rem; }
+    nav ul li a { text-decoration: none; color: var(--muted); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; position: relative; transition: color 0.3s; padding-bottom: 4px; }
+    nav ul li a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; transition: width 0.3s ease; }
+    nav ul li a:hover { color: var(--accent2); }
+    nav ul li a:hover::after { width: 100%; }
+    .hero { min-height: 100vh; display: flex; align-items: center; padding: 100px 6vw 60px; gap: 6vw; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -200px; right: -200px; width: 700px; height: 700px; background: radial-gradient(circle, rgba(124,92,191,0.18) 0%, transparent 70%); pointer-events: none; }
+    .hero::after { content: ''; position: absolute; bottom: -150px; left: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(167,139,250,0.10) 0%, transparent 70%); pointer-events: none; }
+    .hero-photo-wrap { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 1.4rem; position: relative; z-index: 1; }
+    .hero-photo { width: 220px; height: 220px; border-radius: 50%; border: 4px solid transparent; background: linear-gradient(var(--bg2), var(--bg2)) padding-box, linear-gradient(135deg, var(--accent), var(--accent2)) border-box; box-shadow: 0 0 60px rgba(124,92,191,0.35), 0 8px 32px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .hero-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .hero-photo-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--bg3), var(--bg2)); border-radius: 50%; font-size: 5.5rem; }
+    .hero-name { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; text-align: center; background: linear-gradient(135deg, #fff 40%, var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-title { font-size: 0.82rem; color: var(--accent2); letter-spacing: 0.1em; text-transform: uppercase; text-align: center; font-weight: 500; }
+    .hero-affil { font-size: 0.78rem; color: var(--muted); text-align: center; }
+    .social-links { display: flex; gap: 0.8rem; margin-top: 0.4rem; }
+    .social-links a { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--bg3); border: 1px solid rgba(124,92,191,0.3); color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
+    .social-links a:hover { background: var(--accent); border-color: var(--accent); color: #fff; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(124,92,191,0.4); }
+    .hero-text { flex: 1; position: relative; z-index: 1; }
+    .hero-greeting { font-size: 0.9rem; color: var(--accent2); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.7rem; font-weight: 500; }
+    .hero-heading { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.4rem; background: linear-gradient(135deg, #ffffff 0%, var(--accent2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-desc { font-size: 1.05rem; color: var(--muted); line-height: 1.8; max-width: 540px; margin-bottom: 2.2rem; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2.4rem; }
+    .tag { padding: 0.35rem 0.9rem; border-radius: 999px; background: rgba(124,92,191,0.15); border: 1px solid rgba(124,92,191,0.3); font-size: 0.78rem; color: var(--accent2); letter-spacing: 0.04em; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.8rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500; text-decoration: none; transition: all 0.3s; cursor: pointer; }
+    .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; box-shadow: 0 4px 20px rgba(124,92,191,0.4); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(124,92,191,0.55); }
+    .btn-outline { background: transparent; color: var(--accent2); border: 1px solid rgba(124,92,191,0.4); margin-left: 0.8rem; }
+    .btn-outline:hover { background: rgba(124,92,191,0.12); border-color: var(--accent2); transform: translateY(-2px); }
+    section { padding: 100px 10vw; position: relative; }
+    section:nth-child(even) { background: var(--bg2); }
+    .section-label { font-size: 0.78rem; color: var(--accent2); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 500; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 700; margin-bottom: 2.4rem; position: relative; display: inline-block; }
+    .section-title::after { content: ''; position: absolute; bottom: -8px; left: 0; width: 50px; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .about-text p { color: var(--muted); line-height: 1.85; margin-bottom: 1.1rem; font-size: 0.97rem; }
+    .interests-list { display: flex; flex-direction: column; gap: 0.9rem; }
+    .interest-item { display: flex; align-items: center; gap: 0.85rem; padding: 0.85rem 1.1rem; background: var(--card); border: 1px solid rgba(124,92,191,0.15); border-radius: 10px; font-size: 0.92rem; color: var(--text); transition: border-color 0.3s, transform 0.3s; }
+    .interest-item:hover { border-color: rgba(124,92,191,0.45); transform: translateX(4px); }
+    .interest-icon { font-size: 1.3rem; }
+    .pub-list { display: flex; flex-direction: column; gap: 1.4rem; }
+    .pub-card { background: var(--card); border: 1px solid rgba(124,92,191,0.15); border-radius: 14px; padding: 1.6rem 1.8rem; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; }
+    .pub-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--accent), var(--accent2)); border-radius: 2px 0 0 2px; }
+    .pub-card:hover { border-color: rgba(124,92,191,0.4); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(124,92,191,0.18); }
+    .pub-title { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem; }
+    .pub-authors { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.6rem; }
+    .pub-venue { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: var(--accent2); background: rgba(124,92,191,0.12); border: 1px solid rgba(124,92,191,0.25); padding: 0.22rem 0.7rem; border-radius: 999px; }
+    .pub-links { display: flex; gap: 0.6rem; margin-top: 0.9rem; }
+    .pub-link { font-size: 0.78rem; padding: 0.25rem 0.7rem; border-radius: 6px; text-decoration: none; background: rgba(124,92,191,0.1); color: var(--accent2); border: 1px solid rgba(124,92,191,0.25); transition: all 0.25s; }
+    .pub-link:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .cv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .cv-section h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; margin-bottom: 1.2rem; color: var(--accent2); }
+    .cv-item { padding: 1.1rem 1.2rem; background: var(--card); border-left: 2px solid var(--accent); border-radius: 0 10px 10px 0; margin-bottom: 0.9rem; transition: background 0.3s; }
+    .cv-item:hover { background: rgba(124,92,191,0.12); }
+    .cv-item .cv-date { font-size: 0.74rem; color: var(--accent2); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.3rem; }
+    .cv-item .cv-role { font-weight: 600; font-size: 0.97rem; color: var(--text); }
+    .cv-item .cv-org { font-size: 0.85rem; color: var(--muted); }
+    .cv-download { margin-top: 2.5rem; text-align: center; }
+    .contact-wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: start; }
+    .contact-info p { color: var(--muted); line-height: 1.8; margin-bottom: 1.6rem; font-size: 0.97rem; }
+    .contact-item { display: flex; align-items: center; gap: 0.9rem; padding: 0.85rem 0; border-bottom: 1px solid rgba(124,92,191,0.12); font-size: 0.92rem; }
+    .contact-item-icon { width: 38px; height: 38px; border-radius: 10px; background: rgba(124,92,191,0.15); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .contact-item a { color: var(--accent2); text-decoration: none; }
+    .contact-item a:hover { text-decoration: underline; }
+    .contact-form { display: flex; flex-direction: column; gap: 1.1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.45rem; }
+    .form-group label { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+    .form-group input, .form-group textarea { background: var(--card); border: 1px solid rgba(124,92,191,0.2); border-radius: 8px; padding: 0.75rem 1rem; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.3s; resize: vertical; }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--accent2); box-shadow: 0 0 0 3px rgba(124,92,191,0.12); }
+    .form-group textarea { min-height: 120px; }
+    footer { text-align: center; padding: 2rem; font-size: 0.8rem; color: var(--muted); background: var(--bg); border-top: 1px solid rgba(124,92,191,0.12); }
+    .dots { position: absolute; right: 8vw; top: 50%; transform: translateY(-50%); display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; opacity: 0.18; pointer-events: none; }
+    .dots span { width: 4px; height: 4px; background: var(--accent2); border-radius: 50%; display: block; }
+    @media (max-width: 768px) { .hero { flex-direction: column; padding-top: 90px; } .about-grid, .cv-grid, .contact-wrap { grid-template-columns: 1fr; } nav { padding: 0 1.5rem; } nav ul { gap: 1.2rem; } section { padding: 70px 6vw; } }
+  </style>
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#cv">CV</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+<section class="hero" id="home">
+  <div class="dots"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="hero-photo-wrap">
+    <div class="hero-photo"><div class="hero-photo-placeholder">&#128105;&#8205;&#128187;</div></div>
+    <div class="hero-name">Pernille Bergesen</div>
+    <div class="hero-title">MSc Artificial Intelligence</div>
+    <div class="hero-affil">University &middot; 2024 &ndash; 2026</div>
+    <div class="social-links">
+      <a href="#" title="GitHub">&#128736;</a>
+      <a href="#" title="LinkedIn">&#128188;</a>
+      <a href="#" title="Email">&#9993;</a>
+      <a href="#" title="Scholar">&#127891;</a>
+    </div>
+  </div>
+  <div class="hero-text">
+    <div class="hero-greeting">Hello, I am</div>
+    <h1 class="hero-heading">Pernille<br/>Bergesen</h1>
+    <p class="hero-desc">A passionate MSc student in Artificial Intelligence, exploring the intersection of machine learning, natural language processing, and human-centred AI. I'm interested in building systems that are not only intelligent, but fair, interpretable, and useful.</p>
+    <div class="hero-tags">
+      <span class="tag">Machine Learning</span>
+      <span class="tag">NLP</span>
+      <span class="tag">Computer Vision</span>
+      <span class="tag">AI Ethics</span>
+      <span class="tag">Deep Learning</span>
+    </div>
+    <a href="#about" class="btn btn-primary">Learn more</a>
+    <a href="#contact" class="btn btn-outline">Get in touch</a>
+  </div>
+</section>
+<section id="about">
+  <div class="section-label">Who I am</div>
+  <h2 class="section-title">About Me</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I am a Master's student in Artificial Intelligence with a background in computer science. My research interests span machine learning, natural language processing, and responsible AI. I enjoy working on problems that sit at the boundary between theory and real-world impact.</p>
+      <p>Before my MSc, I completed my BSc in Computer Science, where I first fell in love with the elegance of algorithms and the potential of data-driven systems. Outside of academia, I enjoy hiking, reading sci-fi, and contributing to open-source projects.</p>
+      <p>I'm always open to collaborations, internships, or simply a good conversation about AI. Feel free to reach out!</p>
+    </div>
+    <div>
+      <div class="section-label" style="margin-bottom:1rem;">Research interests</div>
+      <div class="interests-list">
+        <div class="interest-item"><span class="interest-icon">&#129504;</span> Natural Language Processing &amp; LLMs</div>
+        <div class="interest-item"><span class="interest-icon">&#128065;</span> Computer Vision</div>
+        <div class="interest-item"><span class="interest-icon">&#9878;</span> Fairness &amp; AI Ethics</div>
+        <div class="interest-item"><span class="interest-icon">&#128269;</span> Explainable AI (XAI)</div>
+        <div class="interest-item"><span class="interest-icon">&#129302;</span> Reinforcement Learning</div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="publications">
+  <div class="section-label">Research</div>
+  <h2 class="section-title">Publications</h2>
+  <div class="pub-list">
+    <div class="pub-card">
+      <div class="pub-title">Add your paper title here</div>
+      <div class="pub-authors">Pernille Bergesen, Co-Author Name, Supervisor Name</div>
+      <span class="pub-venue">&#128196; Conference / Journal Name &middot; 2025</span>
+      <div class="pub-links"><a href="#" class="pub-link">Paper</a><a href="#" class="pub-link">Code</a><a href="#" class="pub-link">Slides</a></div>
+    </div>
+    <div class="pub-card">
+      <div class="pub-title">Another paper title goes here</div>
+      <div class="pub-authors">Pernille Bergesen, Co-Author Name</div>
+      <span class="pub-venue">&#128196; Workshop Name &middot; 2024</span>
+      <div class="pub-links"><a href="#" class="pub-link">Paper</a><a href="#" class="pub-link">Poster</a></div>
+    </div>
+    <div class="pub-card" style="opacity:0.6;border-style:dashed;">
+      <div class="pub-title">Working paper / Thesis (in progress)</div>
+      <div class="pub-authors">Pernille Bergesen</div>
+      <span class="pub-venue">&#128300; MSc Thesis &middot; Expected 2026</span>
+    </div>
+  </div>
+</section>
+<section id="cv">
+  <div class="section-label">Background</div>
+  <h2 class="section-title">Curriculum Vitae</h2>
+  <div class="cv-grid">
+    <div class="cv-section">
+      <h3>&#127891; Education</h3>
+      <div class="cv-item"><div class="cv-date">2024 &ndash; 2026</div><div class="cv-role">MSc Artificial Intelligence</div><div class="cv-org">Your University Name</div></div>
+      <div class="cv-item"><div class="cv-date">2021 &ndash; 2024</div><div class="cv-role">BSc Computer Science</div><div class="cv-org">Your University Name</div></div>
+    </div>
+    <div class="cv-section">
+      <h3>&#128188; Experience</h3>
+      <div class="cv-item"><div class="cv-date">Summer 2025</div><div class="cv-role">Research Intern</div><div class="cv-org">Organisation / Lab Name</div></div>
+      <div class="cv-item"><div class="cv-date">2023 &ndash; 2024</div><div class="cv-role">Teaching Assistant</div><div class="cv-org">Introduction to Machine Learning</div></div>
+    </div>
+    <div class="cv-section">
+      <h3>&#127942; Honours &amp; Awards</h3>
+      <div class="cv-item"><div class="cv-date">2024</div><div class="cv-role">Dean's List / Award Name</div><div class="cv-org">Institution</div></div>
+    </div>
+    <div class="cv-section">
+      <h3>&#128736; Skills</h3>
+      <div class="cv-item"><div class="cv-role">Languages</div><div class="cv-org">Python, R, Julia, C++</div></div>
+      <div class="cv-item"><div class="cv-role">Frameworks &amp; Tools</div><div class="cv-org">PyTorch, TensorFlow, HuggingFace, scikit-learn, Git</div></div>
+    </div>
+  </div>
+  <div class="cv-download"><a href="#" class="btn btn-primary">&#11015; Download Full CV (PDF)</a></div>
+</section>
+<section id="contact">
+  <div class="section-label">Let's connect</div>
+  <h2 class="section-title">Contact</h2>
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <p>I'm always happy to hear from fellow researchers, potential collaborators, or anyone curious about AI. Whether it's about research, projects, or just a chat &mdash; feel free to reach out.</p>
+      <div class="contact-item"><div class="contact-item-icon">&#9993;</div><div><a href="mailto:pernille@example.com">pernille@example.com</a></div></div>
+      <div class="contact-item"><div class="contact-item-icon">&#127757;</div><div>Your City, Country</div></div>
+      <div class="contact-item"><div class="contact-item-icon">&#128188;</div><div><a href="#">linkedin.com/in/pernillebergesen</a></div></div>
+      <div class="contact-item"><div class="contact-item-icon">&#128736;</div><div><a href="#">github.com/pernillejorg</a></div></div>
+    </div>
+    <form class="contact-form" onsubmit="return false;">
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Jane Doe" /></div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="jane@example.com" /></div>
+      <div class="form-group"><label>Message</label><textarea placeholder="Hello Pernille, I'd love to collaborate on..."></textarea></div>
+      <button class="btn btn-primary" type="submit">Send Message &#9993;</button>
+    </form>
+  </div>
+</section>
+<footer><p>&copy; 2026 Pernille Bergesen &middot; Built with &#10084; &middot; <a href="https://github.com/pernillejorg/pernillejorg.github.io" style="color:var(--accent2)">Source on GitHub</a></p></footer>
+</body>
+</html>
